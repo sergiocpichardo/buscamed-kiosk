@@ -12,7 +12,7 @@ function Home({onNextSlide, data}) {
                 <Image style={{width: '40%', height: '40%'}} resizeMode="contain" source={{uri: 'http://buscamed.do/admin/' +data.display_image}}/>
                 <TouchableOpacity
                     onPress={onNextSlide}
-                    style={[styles.button, {marginTop: 100, padding: 25, minWidth: 300}]}>
+                    style={[styles.button, {marginTop: 100, padding: 25}]}>
                     <Text style={[styles.buttonText, {fontSize: 28}]}>Hacer cita médica</Text>
                 </TouchableOpacity>
             </View>

@@ -19,7 +19,8 @@ import {
     DatePickerAndroid,
     ScrollView,
     ActivityIndicator,
-    Alert
+    Alert,
+    Dimensions
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import IdInput from './src/screens/IdInput';
@@ -44,7 +45,7 @@ import UserInactivity from 'react-native-user-inactivity';
 
 
 import {api} from './src/utils/api';
-
+const {height, width} = Dimensions.get("window");
 type Props = {};
 const defaultState = {
     id: "",
@@ -442,9 +443,9 @@ export default class App extends Component<Props> {
                 timeForInactivity={120000}
                 onAction={this.onAction}
             >
-                <View style={{flex: 1}}>
+                <View style={{flex: 1, height:height, width:width}}>
                     <Image style={{position: 'absolute', bottom: 0, top: 0, left: 0, right: 0, height: '100%'}}
-                           resizeMode="cover" source={require('./assets/background.png')}/>
+                            source={require('./assets/background.png')}/>
                     <Swiper
                         keyboardDismissMode='on-drag'
                         ref={(ref) => this.swiper = ref}
@@ -621,7 +622,7 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 5,
         backgroundColor: '#88c84c',
-        minWidth: 240,
+        // minWidth: 240,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -661,6 +662,8 @@ const styles = StyleSheet.create({
     },
     slide: {
         flex: 1,
+        height:height,
+        width:width
     },
 
     spaceBetween: {

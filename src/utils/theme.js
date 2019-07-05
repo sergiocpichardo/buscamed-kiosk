@@ -1,4 +1,6 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet, Dimensions} from "react-native";
+const {height, width} = Dimensions.get("window");
+
 
 export const styles = StyleSheet.create({
 
@@ -111,7 +113,7 @@ export const styles = StyleSheet.create({
     },
     slide: {
         flex: 1,
-        height: 300
+       height:height*0.2
     },
 
     spaceBetween: {
