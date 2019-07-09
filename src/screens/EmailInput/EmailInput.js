@@ -42,7 +42,10 @@ class EmailInput extends PureComponent {
                             ref={ref => {this.emailInput = ref}}
                             value={value}
                             onChangeText={(text) => handleTextChange(text)}
-                            style={[styles.input, {width: '100%'}]}/>
+                            style={[styles.input, {width: '100%'}]}
+                            keyboardType='email-address'
+                                autoCorrect={false}
+                            />
                     </View>
 
                     <View style={[styles.spaceBetween, {width: '100%'}]}>

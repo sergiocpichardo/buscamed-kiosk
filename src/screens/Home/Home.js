@@ -4,11 +4,16 @@ import {styles} from '../../utils/theme';
 
 import BuscamedKeyboard from "../../components/BuscamedKeyboard";
 
-function Home({onNextSlide, data}) {
+function Home({onNextSlide, data, onInfo}) {
     return (
         <View style={styles.slide}>
 
             <View style={[styles.section, styles.box]}>
+            <TouchableOpacity
+                    onPress={onInfo}
+                    style={[styles.button, { padding: 25}]}>
+                    <Text style={[styles.buttonText, {fontSize: 28}]}>Informacion</Text>
+                </TouchableOpacity>
                 <Image style={{width: '40%', height: '40%'}} resizeMode="contain" source={{uri: 'http://buscamed.do/admin/' +data.display_image}}/>
                 <TouchableOpacity
                     onPress={onNextSlide}

@@ -146,32 +146,69 @@ export default class App extends Component<Props> {
     checkId = () => {
         this.setState({
             idCheckLoading: true
-        }, () => {
-            api.patient.getPatientByIdNumber(this.state.id).then(response => {
-                const patient = response.patient;
+        }, async () => {
+            const cedulaResult = await fetch("http://buscamed.do/webservice/getperson?cedula="+this.state.id);
+            const cedulaInfo = await cedulaResult.json();
+            let bloodType = cedulaInfo.COD_SANGRE;
+            const bloodData = [
+                {id: "1", name: "A+"},
+                {id: "2", name: "A-"},
+                {id: "3", name: "B+"},
+                {id: "4", name: "B-"},
+                {id: "5", name: "O+"},
+                {id: "6", name: "O-"},
+                {id: "7", name: "AB+"},
+                {id: "8", name: "AB-"}
+            ];
+            if(bloodType=="5"){
+                bloodType="7";
+            }else if(bloodType=="6"){
+                bloodType="8";
+            }else if(bloodType=="7"){
+                bloodType="5";
+            }else if(bloodType=="8"){
+                bloodType="6";
+            } else if(bloodType=="0"){
+                bloodType=null;
+            } else if(bloodType=="9"){
+                bloodType=null;
+            }
+            console.log(bloodData["1"]);
+            this.setState({firstName:cedulaInfo.NOMBRES,
+                            lastName:cedulaInfo.APELLIDO1 +" "+cedulaInfo.APELLIDO2,
+                            // phone:cedulaInfo.TELEFONO,
+                            bloodType:bloodType?bloodData[Number(bloodType)-1]:{id:10, name:"NULL"},
+                            maritalStatus:cedulaInfo.EST_CIVIL=="S"?{id: "1", name: "Soltero"}:{id: "2", name: "Casado"},
+                            gender:cedulaInfo.SEXO=="M"?{id: 'male', name: "Hombre"}:{id: 'female', name: "Mujer"}
+                            }, ()=>{
+                                console.log(this.state);
+                                this.handleNextSlide();
+                            });
+            // api.patient.getPatientByIdNumber(this.state.id).then(response => {
+            //     const patient = response.patient;
 
-                if (patient) {
-                    this.setState({
-                        patient,
-                        idCheckLoading: false,
-                        firstName: patient.patient_firstname,
-                        lastName: patient.patient_lastname,
-                        email: patient.email,
-                        phone: patient.phone,
-                    }, () => {
-                        this.handleNextSlide();
-                    });
-                } else {
-                    this.setState({
-                        idCheckLoading: false,
-                    }, () => {
-                        this.handleNextSlide();
-                    })
-                }
-                setTimeout(() => {
-                    this.nameInput.focusInput();
-                }, 500)
-            });
+            //     if (patient) {
+            //         this.setState({
+            //             patient,
+            //             idCheckLoading: false,
+            //             firstName: patient.patient_firstname,
+            //             lastName: patient.patient_lastname,
+            //             email: patient.email,
+            //             phone: patient.phone,
+            //         }, () => {
+            //             this.handleNextSlide();
+            //         });
+            //     } else {
+            //         this.setState({
+            //             idCheckLoading: false,
+            //         }, () => {
+            //             this.handleNextSlide();
+            //         })
+            //     }
+            //     setTimeout(() => {
+            //         this.nameInput.focusInput();
+            //     }, 500)
+            // });
         });
 
     };
@@ -221,26 +258,27 @@ export default class App extends Component<Props> {
             this.swiper.scrollBy(offset - 1);
         }
 
-        if (field === "id") {
-            setTimeout(() => {
-                this.nameInput.focusInput();
-            }, 500)
-        }
+        // if (field === "id") {
+        //     setTimeout(() => {
+        //         this.nameInput.focusInput();
+        //     }, 500)
+        // }
 
-        if (field === "fistName") {
-            setTimeout(() => {
-                this.lastNameInput.focusInput();
+        // if (field === "fistName") {
+        //     setTimeout(() => {
+        //         this.lastNameInput.focusInput();
 
-            }, 500)
-        }
+        //     }, 500)
+        // }
 
-        if (field === "lastName") {
-            setTimeout(() => {
-                this.emailInput.focusInput();
+        // if (field === "lastName") {
+        //     setTimeout(() => {
+        //         this.emailInput.focusInput();
 
-            }, 500)
-        }
-        // this.swiper.scrollBy(offset);
+        //     }, 500)
+        // }
+        
+        this.swiper.scrollBy(offset);
     };
 
     handleTextChange = (key, value) => {
@@ -320,8 +358,7 @@ export default class App extends Component<Props> {
         if (key === 'speciality') {
             this.getDoctors(value.id);
         }
-
-
+        console.log("Chekiando el id", this.state.id=='');
         this.setState({
             [key]: value
         }, () => {
@@ -335,6 +372,9 @@ export default class App extends Component<Props> {
             }
         })
     };
+    handleHourSelect = (key,value)=>{
+        this.swiper.scrollBy(-6);
+    }
 
     handleResetForm = (prompt = true) => {
 
@@ -443,7 +483,7 @@ export default class App extends Component<Props> {
                 timeForInactivity={120000}
                 onAction={this.onAction}
             >
-                <View style={{flex: 1, height:height, width:width}}>
+                <View style={{flex: 1}}>
                     <Image style={{position: 'absolute', bottom: 0, top: 0, left: 0, right: 0, height: '100%'}}
                             source={require('./assets/background.png')}/>
                     <Swiper
@@ -462,7 +502,7 @@ export default class App extends Component<Props> {
 
                         {/*<CalendarInput
                         handleSelectOption={(text) => this.handleSelectOption("date", text)}/>*/}
-                        <Home data={this.state.center} onNextSlide={this.handleNextSlide}/>
+                        <Home data={this.state.center} onNextSlide={this.handleNextSlide} onInfo={()=>{this.swiper.scrollBy(5);}}/>
                         <IdInput
                             loading={idCheckLoading}
                             value={this.state.id}
@@ -470,15 +510,15 @@ export default class App extends Component<Props> {
                             handleTextChange={(text) => this.handleTextChange("id", text)}
                             onNextSlide={() => this.handleNextSlide("id")}/>
 
-                        <NameInput
+                        {/* <NameInput
                             ref={(ref) => {
                                 this.nameInput = ref
                             }}
                             value={this.state.firstName}
                             handleTextChange={(text) => this.handleTextChange("firstName", text)}
-                            onNextSlide={() => this.handleNextSlide("fistName")}/>
+                            onNextSlide={() => this.handleNextSlide("fistName")}/> */}
 
-                        <LastNameInput
+                        {/* <LastNameInput
                             ref={(ref) => {
                                 this.lastNameInput = ref
                             }}
@@ -486,8 +526,11 @@ export default class App extends Component<Props> {
                             autoFocus={true}
                             handleTextChange={(text) => this.handleTextChange("lastName", text)}
                             onNextSlide={() => this.handleNextSlide("lastName")}/>
-
-
+ */}
+                        <PhoneInput
+                            value={this.state.phone}
+                            handleTextChange={(text) => this.handleTextChange("phone", text)}
+                            onNextSlide={() => this.handleNextSlide("phone")}/>
                         <EmailInput
                             ref={(ref) => {
                                 this.emailInput = ref
@@ -496,26 +539,23 @@ export default class App extends Component<Props> {
                             handleTextChange={(text) => this.handleTextChange("email", text)}
                             onNextSlide={() => this.handleNextSlide("email")}/>
 
-                        <GenderInput
+                        {/* <GenderInput
                             value={this.state.gender}
                             handleSelectOption={(text) => this.handleSelectOption("gender", text)}
-                            onNextSlide={() => this.handleNextSlide("gender")}/>
+                            onNextSlide={() => this.handleNextSlide("gender")}/> */}
 
-                        <PhoneInput
-                            value={this.state.phone}
-                            handleTextChange={(text) => this.handleTextChange("phone", text)}
-                            onNextSlide={() => this.handleNextSlide("phone")}/>
+                        
 
-                        <MaritalStatusInput
+                        {/* <MaritalStatusInput
                             value={this.state.maritalStatus}
                             handleSelectOption={(text) => this.handleSelectOption("maritalStatus", text)}
-                            onNextSlide={() => this.handleNextSlide("maritalStatus")}/>
+                            onNextSlide={() => this.handleNextSlide("maritalStatus")}/> */}
 
-                        <BloodTypeInput
+                        {/* <BloodTypeInput
                             value={this.state.bloodType}
                             items={bloodTypes}
                             handleSelectOption={(text) => this.handleSelectOption("bloodType", text)}
-                            onNextSlide={() => this.handleNextSlide("bloodType")}/>
+                            onNextSlide={() => this.handleNextSlide("bloodType")}/> */}
 
                         <PhotoTake
                             ref={(ref) => {
@@ -543,7 +583,7 @@ export default class App extends Component<Props> {
                             date={date}
                             doctor={doctor}
                             items={doctorSchedule || []}
-                            handleSelectOption={(text) => this.handleSelectOption("hour", text)}
+                            handleSelectOption={(text) => this.handleHourSelect("hour", text)}
                         />
 
                         <PromptAppointment
