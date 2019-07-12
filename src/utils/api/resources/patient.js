@@ -1,11 +1,13 @@
 import {request, url} from "../config";
 
+
 export const getPatientByIdNumber = (id) => {
     const requestUrl = `${url}/get_patient_by_identity/${id}`;
     return request(requestUrl);
 };
 
 export const create = (payload) => {
+    console.log("SE TA MANDANDO A CREA");
     const requestUrl = `${url}/create_patient`;
 
     const body = {

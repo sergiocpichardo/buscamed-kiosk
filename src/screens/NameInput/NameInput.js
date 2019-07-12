@@ -35,7 +35,9 @@ class NameInput extends PureComponent {
                                 ref={ref => {this.nameInput = ref}}
                                 value={value}
                                 onChangeText={(text) => handleTextChange(text)}
-                                style={[styles.input, {width: '100%'}]}/>
+                                style={[styles.input, {width: '100%'}]}
+                                autoCorrect={false}
+                                />
                         </View>
 
                             <TouchableOpacity

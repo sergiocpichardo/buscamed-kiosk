@@ -38,6 +38,7 @@ class LastNameInput extends PureComponent {
                             value={value}
                             onChangeText={(text) => handleTextChange(text)}
                             style={[styles.input, {width: '100%'}]}
+                            autoCorrect={false}
                         />
                     </View>
 

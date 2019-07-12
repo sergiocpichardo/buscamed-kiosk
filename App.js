@@ -6,8 +6,8 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {configureLocale} from './src/utils/configureLocale';
+import React, { Component } from 'react';
+import { configureLocale } from './src/utils/configureLocale';
 import {
     Platform,
     StyleSheet,
@@ -44,8 +44,12 @@ import moment from 'moment';
 import UserInactivity from 'react-native-user-inactivity';
 
 
-import {api} from './src/utils/api';
-const {height, width} = Dimensions.get("window");
+import { api } from './src/utils/api';
+
+
+console.disableYellowBox = true;
+
+const { height, width } = Dimensions.get("window");
 type Props = {};
 const defaultState = {
     id: "",
@@ -53,10 +57,11 @@ const defaultState = {
     lastName: "",
     email: "",
     phone: "",
+    dob: "",
     patient: {
         display_name: 'assets/uploads/doctor/Dr-Victor-Garcia-Garcia.jpg'
     },
-
+    patientInfoOrigin: "",
     picture: {},
 
     index: 0,
@@ -72,7 +77,7 @@ const defaultState = {
     confirmationLoading: false,
     idCheckLoading: false,
     appointment: {},
-
+    sinCedula:false,
     center: {},
     centerId: 468,
     centerType: 5,
@@ -99,12 +104,28 @@ export default class App extends Component<Props> {
         this.getDeviceInfo();
         configureLocale('es');
     }
+    // componentDidUpdate(prevProps, prevState){
+    //     if(this.state.sinCedula){
+    //         console.log(prevState);
+    //     }
+        
+
+    // }
+    scrollTo = (scroll)=>{
+        this.swiper.scrollBy(scroll);
+    }
+    noCedula = ()=>{
+        console.log(this.state);
+        this.setState({sinCedula:true},()=>{
+            this.swiper.scrollBy(1);
+        });
+    }
 
     getDeviceInfo = () => {
         const id = DeviceInfo.getUniqueID();
         // alert(DeviceInfo.getUniqueID());
         console.log("deviceUniqueId", DeviceInfo.getUniqueID());
-        this.setState({gettingData: true,})
+        this.setState({ gettingData: true, })
 
         api.center.getDeviceInfo(id).then(response => {
             const data = response.data;
@@ -117,13 +138,13 @@ export default class App extends Component<Props> {
                     gettingData: false,
                     error: false,
                 }, () => {
-                    const {centerId, centerType, userType} = this.state;
+                    const { centerId, centerType, userType } = this.state;
                     api.general.getBloodGroups().then(response => {
-                        this.setState({bloodTypes: response})
+                        this.setState({ bloodTypes: response })
                     });
 
                     api.center.getSpecialities(centerId, userType).then(response => {
-                        this.setState({specialities: response.data})
+                        this.setState({ specialities: response.data })
                     }).catch(error => {
                         alert(JSON.stringify(error, undefined, 5));
                     })
@@ -147,74 +168,80 @@ export default class App extends Component<Props> {
         this.setState({
             idCheckLoading: true
         }, async () => {
-            const cedulaResult = await fetch("http://buscamed.do/webservice/getperson?cedula="+this.state.id);
+            const cedulaResult = await fetch("http://buscamed.do/webservice/getperson?cedula=" + this.state.id);
             const cedulaInfo = await cedulaResult.json();
+            console.log(cedulaInfo);
             let bloodType = cedulaInfo.COD_SANGRE;
             const bloodData = [
-                {id: "1", name: "A+"},
-                {id: "2", name: "A-"},
-                {id: "3", name: "B+"},
-                {id: "4", name: "B-"},
-                {id: "5", name: "O+"},
-                {id: "6", name: "O-"},
-                {id: "7", name: "AB+"},
-                {id: "8", name: "AB-"}
+                { id: "1", name: "A+" },
+                { id: "2", name: "A-" },
+                { id: "3", name: "B+" },
+                { id: "4", name: "B-" },
+                { id: "5", name: "O+" },
+                { id: "6", name: "O-" },
+                { id: "7", name: "AB+" },
+                { id: "8", name: "AB-" }
             ];
-            if(bloodType=="5"){
-                bloodType="7";
-            }else if(bloodType=="6"){
-                bloodType="8";
-            }else if(bloodType=="7"){
-                bloodType="5";
-            }else if(bloodType=="8"){
-                bloodType="6";
-            } else if(bloodType=="0"){
-                bloodType=null;
-            } else if(bloodType=="9"){
-                bloodType=null;
+            if (bloodType == "5") {
+                bloodType = "7";
+            } else if (bloodType == "6") {
+                bloodType = "8";
+            } else if (bloodType == "7") {
+                bloodType = "5";
+            } else if (bloodType == "8") {
+                bloodType = "6";
+            } else if (bloodType == "0") {
+                bloodType = {};
+            } else if (bloodType == "9") {
+                bloodType = {};
             }
             console.log(bloodData["1"]);
-            this.setState({firstName:cedulaInfo.NOMBRES,
-                            lastName:cedulaInfo.APELLIDO1 +" "+cedulaInfo.APELLIDO2,
-                            // phone:cedulaInfo.TELEFONO,
-                            bloodType:bloodType?bloodData[Number(bloodType)-1]:{id:10, name:"NULL"},
-                            maritalStatus:cedulaInfo.EST_CIVIL=="S"?{id: "1", name: "Soltero"}:{id: "2", name: "Casado"},
-                            gender:cedulaInfo.SEXO=="M"?{id: 'male', name: "Hombre"}:{id: 'female', name: "Mujer"}
-                            }, ()=>{
-                                console.log(this.state);
-                                this.handleNextSlide();
-                            });
-            // api.patient.getPatientByIdNumber(this.state.id).then(response => {
-            //     const patient = response.patient;
+            this.setState({
+                firstName: cedulaInfo.NOMBRES,
+                lastName: cedulaInfo.APELLIDO1 + " " + cedulaInfo.APELLIDO2,
+                // phone:cedulaInfo.TELEFONO,
+                bloodType: bloodType ? bloodData[Number(bloodType) - 1] : { id: 10, name: "NULL" },
+                maritalStatus: cedulaInfo.EST_CIVIL == "S" ? { id: "1", name: "Soltero" } : { id: "2", name: "Casado" },
+                gender: cedulaInfo.SEXO == "M" ? { id: 'male', name: "Hombre" } : { id: 'female', name: "Mujer" },
+                patientInfoOrigin: "padron",
+                dob: cedulaInfo.FECHA_NAC
+            }, () => {
+                console.log(this.state);
+                api.patient.getPatientByIdNumber(this.state.id).then(response => {
+                    const patient = response.patient;
 
-            //     if (patient) {
-            //         this.setState({
-            //             patient,
-            //             idCheckLoading: false,
-            //             firstName: patient.patient_firstname,
-            //             lastName: patient.patient_lastname,
-            //             email: patient.email,
-            //             phone: patient.phone,
-            //         }, () => {
-            //             this.handleNextSlide();
-            //         });
-            //     } else {
-            //         this.setState({
-            //             idCheckLoading: false,
-            //         }, () => {
-            //             this.handleNextSlide();
-            //         })
-            //     }
-            //     setTimeout(() => {
-            //         this.nameInput.focusInput();
-            //     }, 500)
-            // });
+                    if (patient) {
+                        this.setState({
+                            patient,
+                            idCheckLoading: false,
+                            firstName: patient.patient_firstname,
+                            lastName: patient.patient_lastname,
+                            email: patient.email,
+                            phone: patient.phone,
+                            patientInfoOrigin:"buscamed"
+                        }, () => {
+                            console.log("Viendo klk", this.state);
+                            this.handleNextSlide();
+                        });
+                    } else {
+                        this.setState({
+                            idCheckLoading: false,
+                        }, () => {
+                            this.handleNextSlide();
+                        })
+                    }
+                    // setTimeout(() => {
+                    //     this.nameInput.focusInput();
+                    // }, 500)
+                });
+            });
         });
+
 
     };
 
     getDoctors = (specialityId) => {
-        const {centerId, centerType, userType} = this.state;
+        const { centerId, centerType, userType } = this.state;
         this.setState({
             doctorListLoading: true
         }, () => {
@@ -277,7 +304,7 @@ export default class App extends Component<Props> {
 
         //     }, 500)
         // }
-        
+
         this.swiper.scrollBy(offset);
     };
 
@@ -293,7 +320,7 @@ export default class App extends Component<Props> {
             doctor: doctor,
             date: date.dateString
         }, () => {
-            const {centerId, centerType} = this.state;
+            const { centerId, centerType } = this.state;
             api.doctor.getSchedule(doctor.id, centerId, centerType, date.dateString).then(response => {
                 // alert(JSON.stringify(response));
                 this.setState({
@@ -307,7 +334,7 @@ export default class App extends Component<Props> {
         try {
             const minDate = new Date();
 
-            const {action, year, month, day} = await DatePickerAndroid.open({
+            const { action, year, month, day } = await DatePickerAndroid.open({
                 // Use `new Date()` for current date.
                 // May 25 2020. Month 0 is January.
                 date: minDate,
@@ -325,7 +352,7 @@ export default class App extends Component<Props> {
                         doctor: doctor,
                         date
                     }, () => {
-                        const {centerId, centerType} = this.state;
+                        const { centerId, centerType } = this.state;
                         api.doctor.getSchedule(doctor.id, centerId, centerType, date).then(response => {
                             // alert(JSON.stringify(response));
                             this.setState({
@@ -338,9 +365,9 @@ export default class App extends Component<Props> {
                         'Mensaje',
                         'Este médico no acepta citas para este día',
                         [
-                            {text: 'OK', onPress: () => this.showCalendar(key, doctor)},
+                            { text: 'OK', onPress: () => this.showCalendar(key, doctor) },
                         ],
-                        {cancelable: false},
+                        { cancelable: false },
                     );
                 }
 
@@ -348,7 +375,7 @@ export default class App extends Component<Props> {
 
 
             }
-        } catch ({code, message}) {
+        } catch ({ code, message }) {
             console.warn('Cannot open date picker', message);
         }
     };
@@ -358,7 +385,7 @@ export default class App extends Component<Props> {
         if (key === 'speciality') {
             this.getDoctors(value.id);
         }
-        console.log("Chekiando el id", this.state.id=='');
+        console.log("Chekiando el id", this.state.id == '');
         this.setState({
             [key]: value
         }, () => {
@@ -372,14 +399,23 @@ export default class App extends Component<Props> {
             }
         })
     };
-    handleHourSelect = (key,value)=>{
-        this.swiper.scrollBy(-6);
+    handleHourSelect = (key, value) => {
+        this.setState({ [key]: value }, () => {
+            console.log("depue de la hora",this.state);
+            if (this.state.patientInfoOrigin== ""&& this.state.sinCedula==false) {
+                this.swiper.scrollBy(-8);
+            } else {
+                this.swiper.scrollBy(1);
+            }
+
+        })
+
     }
 
     handleResetForm = (prompt = true) => {
 
         const callback = () => {
-            const {bloodTypes, specialities, center, centerId, centerType, userType} = this.state;
+            const { bloodTypes, specialities, center, centerId, centerType, userType, sinCedula } = this.state;
             this.setState({
                 ...defaultState,
                 bloodTypes,
@@ -395,7 +431,12 @@ export default class App extends Component<Props> {
             this.currentIndex = 0;
             const currentIndex = this.swiper.state.index;
             const offset = this.currentIndex - currentIndex;
-            this.swiper.scrollBy(offset);
+            if(sinCedula){
+                this.swiper.scrollBy(offset);
+            }else{
+                this.swiper.scrollBy(offset);
+            }
+            
             if (this.photoTake) {
                 this.photoTake.reset();
             }
@@ -415,7 +456,7 @@ export default class App extends Component<Props> {
                         }
                     },
                 ],
-                {cancelable: false},
+                { cancelable: false },
             );
         } else {
             callback();
@@ -428,7 +469,13 @@ export default class App extends Component<Props> {
         this.setState({
             picture
         }, () => {
-            this.handleNextSlide()
+            console.log("is there a doctor saved in state?", this.state.doctor, this.state.doctorId);
+            if (Object.keys(this.state.doctor).length!==0) {
+                this.swiper.scrollBy(4);
+            } else {
+                this.handleNextSlide()
+            }
+
         })
     }
 
@@ -439,22 +486,22 @@ export default class App extends Component<Props> {
     };
 
     onAction = (active) => {
-       console.log("is active",active);
-       if(!active &&  this.currentIndex > 1 ) {
-          this.handleResetForm(false);
-       }
+        console.log("is active", active);
+        if (!active && this.currentIndex > 1) {
+            this.handleResetForm(false);
+        }
     };
 
     render() {
         // alert(this.currentIndex);
 
-        const {gettingData, error, index, bloodTypes, specialities, doctors, doctorSchedule, doctor, speciality, confirmationLoading, doctorListLoading, idCheckLoading, appointment, date, patient, center} = this.state;
+        const { gettingData, error, index, bloodTypes, specialities, doctors, doctorSchedule, doctor, speciality, confirmationLoading, doctorListLoading, idCheckLoading, appointment, date, patient, center } = this.state;
 
         if (gettingData) {
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{fontSize: 40, marginBottom: 15}}>Configurando dispositivo</Text>
-                    <ActivityIndicator size="large"/>
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 40, marginBottom: 15 }}>Configurando dispositivo</Text>
+                    <ActivityIndicator size="large" />
 
                 </View>
             )
@@ -462,8 +509,8 @@ export default class App extends Component<Props> {
 
         if (error) {
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', margin: 15}}>
-                    <Text style={{fontSize: 35, textAlign: 'center', marginBottom: 30}}>Error al configurar el
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', margin: 15 }}>
+                    <Text style={{ fontSize: 35, textAlign: 'center', marginBottom: 30 }}>Error al configurar el
                         dispositivo, por favor revise su conexión a internet y que el dispositivo esté asociado a su
                         centro </Text>
 
@@ -483,9 +530,9 @@ export default class App extends Component<Props> {
                 timeForInactivity={120000}
                 onAction={this.onAction}
             >
-                <View style={{flex: 1}}>
-                    <Image style={{position: 'absolute', bottom: 0, top: 0, left: 0, right: 0, height: '100%'}}
-                            source={require('./assets/background.png')}/>
+                <View style={{ flex: 1 }}>
+                    <Image style={{ position: 'absolute', bottom: 0, top: 0, left: 0, right: 0, height: '100%' }}
+                        source={require('./assets/background.png')} />
                     <Swiper
                         keyboardDismissMode='on-drag'
                         ref={(ref) => this.swiper = ref}
@@ -494,31 +541,36 @@ export default class App extends Component<Props> {
                         index={index}
                         onIndexChanged={(index) => {
                             this.currentIndex = index + 1;
-                            this.setState({currentIndex: this.currentIndex})
+                            this.setState({ currentIndex: this.currentIndex })
                         }}
                         style={[styles.wrapper]}
-                        showsButtons={false}>
+                        showsButtons={false}
+                        removeClippedSubviews={true}>
+
 
 
                         {/*<CalendarInput
                         handleSelectOption={(text) => this.handleSelectOption("date", text)}/>*/}
-                        <Home data={this.state.center} onNextSlide={this.handleNextSlide} onInfo={()=>{this.swiper.scrollBy(5);}}/>
+                        <Home data={this.state.center} onNextSlide={this.handleNextSlide} onInfo={() => { this.swiper.scrollBy(7); }} />
                         <IdInput
+                            handleReset={this.handleResetForm}
+                            scrollTo={this.scrollTo}
                             loading={idCheckLoading}
                             value={this.state.id}
                             checkId={this.checkId}
                             handleTextChange={(text) => this.handleTextChange("id", text)}
-                            onNextSlide={() => this.handleNextSlide("id")}/>
-
-                        {/* <NameInput
+                            onNextSlide={() => this.handleNextSlide("id")} 
+                            noCedula={()=>this.noCedula()}/>
+                    
+                         <NameInput
                             ref={(ref) => {
                                 this.nameInput = ref
                             }}
                             value={this.state.firstName}
                             handleTextChange={(text) => this.handleTextChange("firstName", text)}
-                            onNextSlide={() => this.handleNextSlide("fistName")}/> */}
-
-                        {/* <LastNameInput
+                            onNextSlide={() => this.handleNextSlide("fistName")}/> 
+                    
+                        <LastNameInput
                             ref={(ref) => {
                                 this.lastNameInput = ref
                             }}
@@ -526,25 +578,24 @@ export default class App extends Component<Props> {
                             autoFocus={true}
                             handleTextChange={(text) => this.handleTextChange("lastName", text)}
                             onNextSlide={() => this.handleNextSlide("lastName")}/>
- */}
                         <PhoneInput
                             value={this.state.phone}
                             handleTextChange={(text) => this.handleTextChange("phone", text)}
-                            onNextSlide={() => this.handleNextSlide("phone")}/>
+                            onNextSlide={() => this.handleNextSlide("phone")} />
                         <EmailInput
                             ref={(ref) => {
                                 this.emailInput = ref
                             }}
                             value={this.state.email}
                             handleTextChange={(text) => this.handleTextChange("email", text)}
-                            onNextSlide={() => this.handleNextSlide("email")}/>
+                            onNextSlide={() => this.handleNextSlide("email")} />
 
                         {/* <GenderInput
                             value={this.state.gender}
                             handleSelectOption={(text) => this.handleSelectOption("gender", text)}
                             onNextSlide={() => this.handleNextSlide("gender")}/> */}
 
-                        
+
 
                         {/* <MaritalStatusInput
                             value={this.state.maritalStatus}
@@ -568,7 +619,7 @@ export default class App extends Component<Props> {
                             items={specialities}
                             value={this.state.speciality}
                             handleSelectOption={(text) => this.handleSelectOption("speciality", text)}
-                            onNextSlide={() => this.handleNextSlide("speciality")}/>
+                            onNextSlide={() => this.handleNextSlide("speciality")} />
 
                         <DoctorList
                             loadSchedule={this.loadSchedule}
@@ -577,7 +628,7 @@ export default class App extends Component<Props> {
                             center={center}
                             items={doctors}
                             showCalendar={(text) => this.showCalendar("doctorId", text)}
-                            onNextSlide={() => this.handleNextSlide("")}/>
+                            onNextSlide={() => this.handleNextSlide("")} />
 
                         <HourInput
                             date={date}
@@ -590,7 +641,8 @@ export default class App extends Component<Props> {
                             resetForm={this.handleResetForm}
                             form={this.state}
                             loading={confirmationLoading}
-                            createAppointment={this.makeAppointment}/>
+                            createAppointment={this.makeAppointment}
+                             />
 
 
                         <Confirmation
@@ -625,7 +677,7 @@ export default class App extends Component<Props> {
                                     <TouchableOpacity
                                         onPress={this.handleBack}
                                         disabled={confirmationLoading}
-                                        style={[styles.button, {marginRight: 30, backgroundColor: '#A3A3A3'}]}>
+                                        style={[styles.button, { marginRight: 30, backgroundColor: '#A3A3A3' }]}>
                                         <Text style={styles.buttonText}>Atrás</Text>
                                     </TouchableOpacity>)}
                                 <TouchableOpacity
@@ -702,8 +754,8 @@ const styles = StyleSheet.create({
     },
     slide: {
         flex: 1,
-        height:height,
-        width:width
+        height: height,
+        width: width
     },
 
     spaceBetween: {

@@ -20,6 +20,12 @@ class IdInput extends PureComponent {
         }
         this.props.handleTextChange(finalText)
     };
+    noCedula = ()=>{
+        // this.props.handleReset(false);
+        this.props.noCedula();
+        // this.props.scrollTo(1);
+        // this.props.onNextSlide();
+    }
 
 
 
@@ -47,7 +53,7 @@ class IdInput extends PureComponent {
 
                     <View style={[styles.spaceBetween, {marginTop: 15}]}>
                         <TouchableOpacity
-                            onPress={onNextSlide}
+                            onPress={this.noCedula}
                             style={[styles.button, {backgroundColor: '#a3a3a3'}]}>
                             <Text style={styles.buttonText}>No tengo cédula</Text>
                         </TouchableOpacity>

@@ -22,7 +22,7 @@ class PromptAppointment extends PureComponent {
 
     promptAlert = () => {
         const {form, resetForm} = this.props;
-        this.refs.customAlert.show("Esta seguro?", "Los datos suministrados hasta el moment serán removidos", [{
+        this.refs.customAlert.show("Esta seguro?", "Los datos suministrados hasta el momento serán removidos", [{
             text: 'Cancelar'
 
         }, {
@@ -67,7 +67,7 @@ class PromptAppointment extends PureComponent {
                                     <Text style={{fontSize: 40}}>Mi número de cédula es: {form.id}</Text>
                                     <Text style={{fontSize: 40}}>Mi correo electrónico es {form.email} y mi teléfono
                                         es {form.phone}</Text>
-                                    {form.bloodType.name!=="NULL"?<Text style={{fontSize: 40}}>Mi tipo de sangre es {form.bloodType.name}</Text>:false}
+                                    {Object.keys(form.bloodType).length !== 0?<Text style={{fontSize: 40}}>Mi tipo de sangre es {form.bloodType.name}</Text>:false}
                                     <Text style={{fontSize: 40}}>Mi cita con {form.doctor.doctor_firstname} a
                                         las {form.hour}</Text>
                                 </View>
