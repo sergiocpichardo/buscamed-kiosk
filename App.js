@@ -413,7 +413,7 @@ export default class App extends Component<Props> {
     }
 
     handleResetForm = (prompt = true) => {
-
+        
         const callback = () => {
             const { bloodTypes, specialities, center, centerId, centerType, userType, sinCedula } = this.state;
             this.setState({
@@ -480,6 +480,10 @@ export default class App extends Component<Props> {
     }
 
     handleBack = () => {
+        console.log();
+        if(this.state.index==0){
+           this.handleResetForm(false);
+        }
         const currentIndex = this.swiper.state.index;
         const offset = (this.currentIndex - 2) - currentIndex;
         this.swiper.scrollBy(offset);
