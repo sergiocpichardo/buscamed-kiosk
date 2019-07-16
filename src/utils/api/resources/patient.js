@@ -7,7 +7,7 @@ export const getPatientByIdNumber = (id) => {
 };
 
 export const create = (payload) => {
-    console.log("SE TA MANDANDO A CREA");
+    // console.log("SE TA MANDANDO A CREA");
     const requestUrl = `${url}/create_patient`;
 
     const body = {

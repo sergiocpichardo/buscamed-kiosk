@@ -126,12 +126,12 @@ class PhotoTake extends Component {
                 },
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log('You can use the camera');
+                // console.log('You can use the camera');
                 // this.setState({
                 //     isCameraVisible: true
                 // })
             } else {
-                console.log('Camera permission denied');
+                // console.log('Camera permission denied');
             }
         } catch (err) {
             console.warn(err);

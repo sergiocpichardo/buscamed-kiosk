@@ -1,4 +1,6 @@
 {
   "name": "KioskBuscamed",
-  "displayName": "KioskBuscamed"
+  "displayName": "KioskBuscamed",
+  "icon":"./assets/icon.png",
+  "splash":"./assets/spash.png"
 }

@@ -115,7 +115,7 @@ export default class App extends Component<Props> {
         this.swiper.scrollBy(scroll);
     }
     noCedula = ()=>{
-        console.log(this.state);
+        // console.log(this.state);
         this.setState({sinCedula:true},()=>{
             this.swiper.scrollBy(1);
         });
@@ -124,7 +124,7 @@ export default class App extends Component<Props> {
     getDeviceInfo = () => {
         const id = DeviceInfo.getUniqueID();
         // alert(DeviceInfo.getUniqueID());
-        console.log("deviceUniqueId", DeviceInfo.getUniqueID());
+        // console.log("deviceUniqueId", DeviceInfo.getUniqueID());
         this.setState({ gettingData: true, })
 
         api.center.getDeviceInfo(id).then(response => {
@@ -170,7 +170,7 @@ export default class App extends Component<Props> {
         }, async () => {
             const cedulaResult = await fetch("http://buscamed.do/webservice/getperson?cedula=" + this.state.id);
             const cedulaInfo = await cedulaResult.json();
-            console.log(cedulaInfo);
+            // console.log(cedulaInfo);
             let bloodType = cedulaInfo.COD_SANGRE;
             const bloodData = [
                 { id: "1", name: "A+" },
@@ -195,7 +195,7 @@ export default class App extends Component<Props> {
             } else if (bloodType == "9") {
                 bloodType = {};
             }
-            console.log(bloodData["1"]);
+            // console.log(bloodData["1"]);
             this.setState({
                 firstName: cedulaInfo.NOMBRES,
                 lastName: cedulaInfo.APELLIDO1 + " " + cedulaInfo.APELLIDO2,
@@ -206,7 +206,7 @@ export default class App extends Component<Props> {
                 patientInfoOrigin: "padron",
                 dob: cedulaInfo.FECHA_NAC
             }, () => {
-                console.log(this.state);
+                // console.log(this.state);
                 api.patient.getPatientByIdNumber(this.state.id).then(response => {
                     const patient = response.patient;
 
@@ -220,7 +220,7 @@ export default class App extends Component<Props> {
                             phone: patient.phone,
                             patientInfoOrigin:"buscamed"
                         }, () => {
-                            console.log("Viendo klk", this.state);
+                            // console.log("Viendo klk", this.state);
                             this.handleNextSlide();
                         });
                     } else {
@@ -385,7 +385,7 @@ export default class App extends Component<Props> {
         if (key === 'speciality') {
             this.getDoctors(value.id);
         }
-        console.log("Chekiando el id", this.state.id == '');
+        // console.log("Chekiando el id", this.state.id == '');
         this.setState({
             [key]: value
         }, () => {
@@ -401,7 +401,7 @@ export default class App extends Component<Props> {
     };
     handleHourSelect = (key, value) => {
         this.setState({ [key]: value }, () => {
-            console.log("depue de la hora",this.state);
+            // console.log("depue de la hora",this.state);
             if (this.state.patientInfoOrigin== ""&& this.state.sinCedula==false) {
                 this.swiper.scrollBy(-8);
             } else {
@@ -469,7 +469,7 @@ export default class App extends Component<Props> {
         this.setState({
             picture
         }, () => {
-            console.log("is there a doctor saved in state?", this.state.doctor, this.state.doctorId);
+            // console.log("is there a doctor saved in state?", this.state.doctor, this.state.doctorId);
             if (Object.keys(this.state.doctor).length!==0) {
                 this.swiper.scrollBy(4);
             } else {
@@ -480,7 +480,7 @@ export default class App extends Component<Props> {
     }
 
     handleBack = () => {
-        console.log();
+        // console.log();
         if(this.state.index==0){
            this.handleResetForm(false);
         }
@@ -490,7 +490,7 @@ export default class App extends Component<Props> {
     };
 
     onAction = (active) => {
-        console.log("is active", active);
+        // console.log("is active", active);
         if (!active && this.currentIndex > 1) {
             this.handleResetForm(false);
         }

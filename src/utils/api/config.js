@@ -34,7 +34,7 @@ export const request = (url, method = "GET", body = null, multi = false) => {
         fetch(url, init)
             .then(res => res.json())
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 // if (hasErrors(response)) {
                 //     reject(response)
                 // }

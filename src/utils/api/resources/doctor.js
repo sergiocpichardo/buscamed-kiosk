@@ -27,7 +27,7 @@ export const getCalendarData = (doctorId, centerId, centerType, dateStart) => {
     const dateEnd = moment(dateStart).add(3, 'months').format('YYYY-MM-DD');
     const requestUrl = `${url}/get_dates_for_doc?doctor_id=${doctorId}&selected_center_type=${centerType}&selected_center_id=${centerId}&date_start=${dateStart.format('YYYY-MM-DD')}&date_end=${dateEnd}`;
 
-    console.log("Endpoint", requestUrl);
+    // console.log("Endpoint", requestUrl);
 
     return request(requestUrl);
 
