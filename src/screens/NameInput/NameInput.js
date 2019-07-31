@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import {styles} from '../../utils/theme'
-import {RNCamera} from "react-native-camera";
+
 
 class NameInput extends PureComponent {
 

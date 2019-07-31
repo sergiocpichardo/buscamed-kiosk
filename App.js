@@ -37,7 +37,7 @@ import Home from './src/screens/Home';
 import HourInput from './src/screens/HourInput';
 import Confirmation from './src/screens/Confirmation';
 import PromptAppointment from './src/screens/PromptAppointment';
-import PhotoTake from './src/screens/PhotoTake';
+// import PhotoTake from './src/screens/PhotoTake';
 import CalendarInput from './src/screens/CalendarInput';
 import DeviceInfo from 'react-native-device-info';
 import moment from 'moment';
@@ -50,7 +50,7 @@ import { api } from './src/utils/api';
 console.disableYellowBox = true;
 
 const { height, width } = Dimensions.get("window");
-type Props = {};
+
 const defaultState = {
     id: "",
     firstName: "",
@@ -89,7 +89,7 @@ const defaultState = {
     error: false,
 };
 
-export default class App extends Component<Props> {
+export default class App extends Component {
 
 
     constructor(props) {
@@ -100,7 +100,7 @@ export default class App extends Component<Props> {
         this.currentIndex = 1;
     }
 
-    componentDidMount(): void {
+    componentDidMount() {
         this.getDeviceInfo();
         configureLocale('es');
     }
@@ -122,13 +122,15 @@ export default class App extends Component<Props> {
     }
 
     getDeviceInfo = () => {
-        const id = DeviceInfo.getUniqueID();
+        // const id = DeviceInfo.getUniqueID();
         // alert(DeviceInfo.getUniqueID());
         // console.log("deviceUniqueId", DeviceInfo.getUniqueID());
-        this.setState({ gettingData: true, })
+        const id = "web";
+        this.setState({ gettingData: true, });
 
         api.center.getDeviceInfo(id).then(response => {
             const data = response.data;
+            console.log(data, "klk");
             if (response.exists) {
                 this.setState({
                     center: data,
@@ -611,13 +613,13 @@ export default class App extends Component<Props> {
                             items={bloodTypes}
                             handleSelectOption={(text) => this.handleSelectOption("bloodType", text)}
                             onNextSlide={() => this.handleNextSlide("bloodType")}/> */}
-
+{/* 
                         <PhotoTake
                             ref={(ref) => {
                                 this.photoTake = ref;
                             }}
                             setPicture={this.setPicture}
-                        />
+                        /> */}
 
                         <SpecialityInput
                             items={specialities}
