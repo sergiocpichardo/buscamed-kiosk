@@ -6,6 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 
 
+
 class SpecialityInput extends PureComponent {
 
     constructor(props) {
@@ -20,7 +21,7 @@ class SpecialityInput extends PureComponent {
     }
 
     renderItem = ({item}) => {
-        const {handleSelectOption} = this.props;
+        const {handleSelectOption} = this.props.screenProps['SpecialityInput'];
 
         return (
             <TouchableOpacity
@@ -33,7 +34,8 @@ class SpecialityInput extends PureComponent {
 
 
     render() {
-        const {onNextSlide, items} = this.props;
+        console.log(this.props.screenProps['SpecialityInput']);
+        const {onNextSlide, items} = this.props.screenProps['SpecialityInput'];
 
 
         return (

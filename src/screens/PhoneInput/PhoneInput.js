@@ -13,17 +13,17 @@ class PhoneInput extends PureComponent {
     }
 
     handleKeyPress = (value, removeChar) => {
-        const  val = this.props.value || "";
+        const  val = this.props.screenProps['PhoneInput'].value || "";
         let finalText = val  + value;
         if(removeChar) {
             finalText = val.substring(0, val.length-1);
         }
-        this.props.handleTextChange(finalText)
+        this.props.screenProps['PhoneInput'].handleTextChange(finalText)
     };
 
 
     render() {
-        const {onNextSlide, value, handleTextChange} = this.props;
+        const {onNextSlide, value, handleTextChange} = this.props.screenProps['PhoneInput'];
         const val = value || "";
 
         return (
@@ -44,7 +44,7 @@ class PhoneInput extends PureComponent {
 
                     <TouchableOpacity
                         disabled={value.length < 10}
-                        onPress={onNextSlide}
+                        onPress={()=>this.props.navigation.navigate('EmailInput')}
                         style={[styles.button, {alignSelf: 'flex-end'}]}>
                         <Text style={styles.buttonText}>Continuar</Text>
                     </TouchableOpacity>

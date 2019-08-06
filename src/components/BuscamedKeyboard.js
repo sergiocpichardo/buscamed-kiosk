@@ -1,5 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Image, Dimensions} from 'react-native';
+
+var {height, width} = Dimensions.get("window");
 
 function BuscamedKeyboard({onKeyPressed}) {
 
@@ -115,10 +117,10 @@ const styles = StyleSheet.create({
 
     button: {
         borderRadius: 5,
-        minWidth: 180,
+        width: width*0.1,
         // minHeight: 100,
         margin: 5,
-
+        height:height*0.08,
        padding: 25,
         // padding: 10,
         justifyContent: 'center',

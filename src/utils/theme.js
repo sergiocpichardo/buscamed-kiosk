@@ -136,15 +136,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center'
     },
 
-    input: {
-        padding: 15,
-        fontSize: 40,
-        paddingLeft: 40,
-        paddingRight: 40,
-        fontWeight: 'bold',
-        color: '#6a6a6a',
-        backgroundColor: '#ececec'
-    },
+  
 
     inline: {
         flexDirection: 'row'

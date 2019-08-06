@@ -22,7 +22,7 @@ class EmailInput extends PureComponent {
     }
 
     render() {
-        const {onNextSlide, handleTextChange, value} = this.props;
+        const {onNextSlide, handleTextChange, value} = this.props.screenProps['EmailInput'];
 
         return (
             <View style={[styles.slide]}>
@@ -57,7 +57,7 @@ class EmailInput extends PureComponent {
 
                         <TouchableOpacity
                             disabled={!this.validateEmail(value)}
-                            onPress={onNextSlide}
+                            onPress={this.props.navigation.navigate('SpecialityInput')}
                             style={[styles.button]}>
                             <Text style={styles.buttonText}>Continuar</Text>
                         </TouchableOpacity>

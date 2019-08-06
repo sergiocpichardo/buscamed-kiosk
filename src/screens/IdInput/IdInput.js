@@ -1,9 +1,13 @@
 import React, {PureComponent} from 'react';
-import {View, Text, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet, Dimensions} from 'react-native';
 import BuscamedKeyboard from "../../components/BuscamedKeyboard";
+
+const {height, width} = Dimensions.get("screen");
+
 
 class IdInput extends PureComponent {
 
+    
     constructor(props) {
         super(props);
 
@@ -13,16 +17,23 @@ class IdInput extends PureComponent {
     }
 
     handleKeyPress = (value, removeChar) => {
-        const  val = this.props.value || "";
-        let finalText = val  + value;
+    
+        const  val = this.props.screenProps['IdInput'].value;
+        if(this.props.screenProps['IdInput'].value.length<11){
+            const  val = this.props.screenProps['IdInput'].value;
+            var finalText = val  + value;
+            this.props.screenProps['IdInput'].handleTextChange(finalText)
+        }
         if(removeChar) {
             finalText = val.substring(0, val.length-1);
+            this.props.screenProps['IdInput'].handleTextChange(finalText)
         }
-        this.props.handleTextChange(finalText)
+        
     };
     noCedula = ()=>{
         // this.props.handleReset(false);
-        this.props.noCedula();
+        this.props.navigation.getParam("noCedula")();
+        // this.props.noCedula();
         // this.props.scrollTo(1);
         // this.props.onNextSlide();
     }
@@ -30,9 +41,11 @@ class IdInput extends PureComponent {
 
 
     render() {
-        const {onNextSlide, value, checkId, loading} = this.props;
-        const val = value || "";
-
+        console.log("idinput props", this.props);
+        const {onNextSlide, value, checkId, loading} = this.props.screenProps['IdInput'];
+        // const val = this.props.navigation.getParam('value',"");
+         
+        const val = value;
         return (
             <View style={styles.slide}>
 
@@ -63,7 +76,6 @@ class IdInput extends PureComponent {
                             onPress={checkId}
                             style={styles.button}>
                             {loading ? <ActivityIndicator/> : <Text style={styles.buttonText}>Continuar</Text>}
-
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -79,7 +91,7 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 5,
         backgroundColor: '#88c84c',
-        minWidth: 240,
+        // minWidth: 120,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -92,8 +104,8 @@ const styles = StyleSheet.create({
 
     box: {
         flex: 1,
-        padding: 13,
-        margin: 85,
+        // padding: 13,
+        margin: '5%',
         borderRadius: 10,
         elevation: 6,
         shadowColor: '#000000',
@@ -101,9 +113,6 @@ const styles = StyleSheet.create({
             width: 0,
             height: 2
         },
-
-
-
         shadowRadius: 5,
         shadowOpacity: .1,
         backgroundColor: '#FFF',
@@ -143,17 +152,24 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        padding: 15,
-        fontSize: 40,
-        paddingLeft: 40,
-        paddingRight: 40,
+     
+        textAlign:'center',
+        // padding: 1,
+        // minWidth:width*0.1,
+        // maxWidth:width*0.2,
+        width:'20%',
+        fontSize: 30,
+        // paddingLeft: 4,
+        // paddingRight: 4,
         fontWeight: 'bold',
         color: '#6a6a6a',
         backgroundColor: '#ececec'
     },
 
     inline: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+
+        justifyContent:'center',
     },
 
     container: {
