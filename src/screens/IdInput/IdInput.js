@@ -32,7 +32,7 @@ class IdInput extends PureComponent {
     };
     noCedula = ()=>{
         // this.props.handleReset(false);
-        this.props.navigation.getParam("noCedula")();
+        this.props.screenProps['IdInput'].noCedula();
         // this.props.noCedula();
         // this.props.scrollTo(1);
         // this.props.onNextSlide();

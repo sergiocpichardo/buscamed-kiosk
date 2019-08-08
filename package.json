@@ -29,6 +29,7 @@
     "hoist-non-react-statics": "^3.3.0",
     "install": "^0.12.2",
     "json-loader": "^0.5.7",
+    "modal-react-native-web": "^0.2.0",
     "moment": "^2.24.0",
     "npm": "^6.10.1",
     "query-string": "^6.8.1",

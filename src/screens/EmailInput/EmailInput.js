@@ -22,7 +22,7 @@ class EmailInput extends PureComponent {
     }
 
     render() {
-        const {onNextSlide, handleTextChange, value} = this.props.screenProps['EmailInput'];
+        const {onNextSlide, handleTextChange, value, infoPath} = this.props.screenProps['EmailInput'];
 
         return (
             <View style={[styles.slide]}>
@@ -50,14 +50,27 @@ class EmailInput extends PureComponent {
 
                     <View style={[styles.spaceBetween, {width: '100%'}]}>
                         <TouchableOpacity
-                            onPress={onNextSlide}
+                            onPress={()=>{
+                                if(infoPath){
+                                    this.props.navigation.navigate('PromptAppointment');
+                                } else{
+                                    this.props.navigation.navigate('SpecialityInput');
+                                    }
+                                }}
                             style={[styles.button, {backgroundColor: '#a3a3a3'}]}>
                             <Text style={[styles.buttonText]}>No tengo correo electrónico</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
                             disabled={!this.validateEmail(value)}
-                            onPress={this.props.navigation.navigate('SpecialityInput')}
+                            onPress={()=>{
+                                if(infoPath){
+                                    this.props.navigation.navigate('PromptAppointment');
+                                } else{
+                                    this.props.navigation.navigate('SpecialityInput');
+                                    }
+                                }
+                                }
                             style={[styles.button]}>
                             <Text style={styles.buttonText}>Continuar</Text>
                         </TouchableOpacity>

@@ -8,15 +8,26 @@ import moment from 'moment';
 
 
 
+
 function HourInput(props) {
 
-    const {handleSelectOption, items, doctor, date} = props;
+    const {handleSelectOption, items, doctor, date, infoPath} = props.screenProps['HourInput'];
 
 
     function renderItem({item}) {
+
         return (
             <TouchableOpacity
-                onPress={()=> handleSelectOption(item)}
+                onPress={()=> {
+                    handleSelectOption(item);
+                    console.log(infoPath);
+                    if(infoPath){
+                        props.navigation.navigate('IdInput');
+                    }else {
+                         props.navigation.navigate('PromptAppointment')};
+                    }
+                   
+                    }
                 style={[styles.buttonOutline, { padding: 15,}]}>
                 <Text style={styles.buttonOutlineText}>{item}</Text>
             </TouchableOpacity>

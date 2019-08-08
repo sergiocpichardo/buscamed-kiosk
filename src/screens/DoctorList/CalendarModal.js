@@ -9,8 +9,8 @@ import {
     Dimensions,
     Image,
     TouchableWithoutFeedback,
-    ActivityIndicator,
-    Modal, Alert
+    ActivityIndicator, 
+    Alert
 } from 'react-native';
 import moment from 'moment';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -19,6 +19,7 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {styles} from "../../utils/theme";
 import {api} from "../../utils/api";
 
+import Modal from 'modal-react-native-web';
 
 export default class CalendarModal extends PureComponent {
 
@@ -108,8 +109,10 @@ export default class CalendarModal extends PureComponent {
         this.setState({
             modalVisible: false,
             markedDates: [],
-        }, () => {
-            loadSchedule(doctor, date)
+        }, () => {console.log(this.props);
+            loadSchedule(doctor, date);
+            this.props.navigation.navigate("HourInput");
+            
 
         });
 

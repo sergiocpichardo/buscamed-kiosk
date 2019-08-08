@@ -2,7 +2,9 @@ import React from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import {styles} from "../../utils/theme";
 
-function Confirmation({appointment}){
+function Confirmation(props){
+    const {appointment} = props.screenProps['Confirmation'];
+
 
     return (
         <View style={[styles.slide]}>
@@ -15,7 +17,7 @@ function Confirmation({appointment}){
 
                 <Text style={{fontSize: 26, color: '#6a6a6a'}}>Gracias por hacer su cita con nostros.</Text>
                 <Text style={{fontSize: 26, color: '#6a6a6a'}}>Su cita está confirmada.</Text>
-                <Text style={{fontSize: 26, color: '#6a6a6a'}}>No de confirmación {appointment.id}.</Text>
+                <Text style={{fontSize: 26, color: '#6a6a6a'}}>Numero de confirmación {appointment.id}.</Text>
             </View>
         </View>
     )

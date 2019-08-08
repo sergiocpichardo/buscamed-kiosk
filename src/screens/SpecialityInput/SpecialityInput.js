@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import BuscamedKeyboard from "../../components/BuscamedKeyboard";
 import {styles} from "../../utils/theme";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/dist/MaterialCommunityIcons.js';
 
 
 
@@ -22,10 +22,10 @@ class SpecialityInput extends PureComponent {
 
     renderItem = ({item}) => {
         const {handleSelectOption} = this.props.screenProps['SpecialityInput'];
-
+        
         return (
             <TouchableOpacity
-                onPress={() => handleSelectOption(item)}
+                onPress={() =>{ handleSelectOption(item); this.props.navigation.navigate('DoctorList')}}
                 style={[styles.buttonOutline, { padding: 15,}]}>
                 <Text style={styles.buttonOutlineText}>{item.name}</Text>
             </TouchableOpacity>

@@ -8,13 +8,13 @@ import BuscamedKeyboard from "../../components/BuscamedKeyboard";
 
 function Home(props) {
     
-    const {onNextSlide, data, onInfo} = props.screenProps['Home']
+    const {onNextSlide, data, onInfo, path} = props.screenProps['Home']
     return (
         <View style={styles.slide}>
 
             <View style={[styles.section, styles.box]}>
             <TouchableOpacity
-                    onPress={onInfo}
+                    onPress={()=>{path(); props.navigation.navigate("SpecialityInput"); }}
                     style={[styles.button, { padding: 25}]}>
                     <Text style={[styles.buttonText, {fontSize: 28}]}>Informacion</Text>
                 </TouchableOpacity>

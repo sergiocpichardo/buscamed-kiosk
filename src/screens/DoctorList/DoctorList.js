@@ -10,19 +10,20 @@ class DoctorList extends PureComponent {
         super(props);
 
         this.state = {
-            textInputId: ""
+            textInputId: "",
+            showCalendar:false,
         }
     }
 
     renderItem = ({item, index}) => {
 
         // alert(JSON.stringify(props))
-        const {center} = this.props;
+        const {center} = this.props.screenProps['DoctorList'];
         const offset = index % 2 === 0 ? {marginRight: 15} : {marginLeft: 200};
 
         return (
             <TouchableOpacity
-                onPress={()=> this.calendar.open(item, center)}
+                onPress={()=> {this.setState({showCalendar:true},()=>this.calendar.open(item, center))}}
                 style={[styles.inline, {margin: 15, flex: 1}]}>
                 <Image
                     source={{uri: "http://buscamed.do/admin/" + item.display_image}}
@@ -41,7 +42,7 @@ class DoctorList extends PureComponent {
 
 
     render() {
-        const {onNextSlide, items, speciality, loading, loadSchedule} = this.props;
+        const {onNextSlide, items, speciality, loading, loadSchedule} = this.props.screenProps['DoctorList'];
 
         return (
             <View style={styles.slide}>
@@ -80,7 +81,7 @@ class DoctorList extends PureComponent {
 
 
                 </View>
-                <CalendarModal loadSchedule={loadSchedule} ref={(ref) => this.calendar = ref}/>
+                {this.state.showCalendar?<CalendarModal navigation={this.props.navigation} loadSchedule={loadSchedule} ref={(ref) => this.calendar = ref}/>:null}
             </View>
         );
     }

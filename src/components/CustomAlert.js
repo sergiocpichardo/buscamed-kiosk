@@ -1,6 +1,12 @@
-import React, {PureComponent} from 'react';
-import {Modal, View, TouchableOpacity, Text} from 'react-native';
+import React, { PureComponent } from 'react';
+import { View, TouchableOpacity, Text } from 'react-native';
 import {styles as theme} from "../utils/theme";
+import Modal from 'modal-react-native-web';
+
+
+
+
+
 
 export default class CustomAlert extends PureComponent {
 
