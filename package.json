@@ -47,6 +47,7 @@
     "react-native-web": "^0.11.5",
     "react-native-webpack": "^0.1.1",
     "react-navigation": "^3.11.1",
+    "react-navigation-stack": "^1.4.0",
     "webpack": "^4.36.1"
   },
   "devDependencies": {

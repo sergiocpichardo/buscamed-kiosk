@@ -37,7 +37,7 @@ class NameInput extends PureComponent {
                                 ref={ref => {this.nameInput = ref}}
                                 value={value}
                                 onChangeText={(text) => handleTextChange(text)}
-                                style={[styles.input, {width: width/2, height:'100%'}]}
+                                style={[styles.input, {width: width/3, height:'100%'}]}
                                 autoCorrect={false}
                                 />
                         </View>
@@ -204,7 +204,7 @@ const styles= StyleSheet.create({
     },
     input: {
      
-        textAlign:'center',
+        // textAlign:'center',
         // padding: 1,
         // minWidth:width*0.1,
         // maxWidth:width*0.2,

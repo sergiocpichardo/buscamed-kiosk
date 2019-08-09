@@ -3,9 +3,25 @@ import {View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList} from 'rea
 import BuscamedKeyboard from "../../components/BuscamedKeyboard";
 import {styles} from "../../utils/theme";
 import MaterialCommunityIcons from 'react-native-vector-icons/dist/MaterialCommunityIcons.js';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import iconFont from 'react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf';
 
-
-
+const iconFontStyles = `@font-face {
+    src: url(${iconFont});
+    font-family: MaterialCommunityIcons;
+  }`;
+  
+  // Create stylesheet
+  const style = document.createElement('style');
+  style.type = 'text/css';
+  if (style.styleSheet) {
+    style.styleSheet.cssText = iconFontStyles;
+  } else {
+    style.appendChild(document.createTextNode(iconFontStyles));
+  }
+  
+  // Inject stylesheet
+  document.head.appendChild(style);
 
 class SpecialityInput extends PureComponent {
 
@@ -67,7 +83,7 @@ class SpecialityInput extends PureComponent {
                                 animated: true
                             });
                         }}>
-                            <MaterialCommunityIcons name="arrow-up-bold-circle" size={80}/>
+                            <Icon name="arrow-up-bold-circle" size={80}/>
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={()=> {
@@ -76,7 +92,7 @@ class SpecialityInput extends PureComponent {
                                 animated: true
                             });
                         }}>
-                            <MaterialCommunityIcons name="arrow-down-bold-circle" size={80}/>
+                            <Icon name="arrow-down-bold-circle" size={80}/>
                         </TouchableOpacity>
                     </View>
 

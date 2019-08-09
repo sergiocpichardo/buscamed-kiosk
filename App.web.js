@@ -11,7 +11,6 @@ import {
   DatePickerAndroid,
   ScrollView,
   ActivityIndicator,
-  Alert,
   Dimensions
 } from 'react-native'
 import Swiper from 'react-native-swiper'
@@ -35,7 +34,7 @@ import DeviceInfo from 'react-native-device-info'
 import moment from 'moment'
 import UserInactivity from 'react-native-user-inactivity'
 import { createSwitchNavigator } from '@react-navigation/core'
-import { createBrowserApp } from '@react-navigation/web'
+import CustomAlert from './src/components/CustomAlert';
 import { api } from './src/utils/api'
 
 console.disableYellowBox = true
@@ -86,18 +85,20 @@ const defaultState = {
   error: false
 }
 const AppNavigator = createSwitchNavigator({
-  Home: Home,
-  IdInput: IdInput,
-  NameInput: NameInput,
-  LastNameInput: LastNameInput,
-  PhoneInput: PhoneInput,
-  EmailInput: EmailInput,
-  SpecialityInput: SpecialityInput,
-  DoctorList: DoctorList,
-  HourInput: HourInput,
-  PromptAppointment: PromptAppointment,
-  Confirmation: Confirmation
+  Home: {screen:Home, path:''},
+  IdInput: {screen:IdInput, path:''},
+  NameInput: {screen:NameInput, path:''},
+  LastNameInput: {screen:LastNameInput, path:''},
+  PhoneInput: {screen:PhoneInput, path:''},
+  EmailInput: {screen:EmailInput, path:''},
+  SpecialityInput: {screen:SpecialityInput, path:''},
+  DoctorList: {screen:DoctorList, path:''},
+  HourInput: {screen:HourInput, path:''},
+  PromptAppointment: {screen:PromptAppointment, path:''},
+  Confirmation: {screen:Confirmation, path:''}
 })
+
+
 
 export default class App extends Component {
   constructor (props) {
@@ -159,7 +160,7 @@ export default class App extends Component {
               api.center
                 .getSpecialities(centerId, userType)
                 .then(response => {
-                  console.log(response.data)
+                //   console.log(response.data)
                   this.setState({ specialities: response.data })
                 })
                 .catch(error => {
@@ -325,7 +326,7 @@ export default class App extends Component {
     )
   }
   path = ()=>{
-      this.setState({infoPath:!this.state.infoPath});
+      this.setState({infoPath:true});
   }
 
   handleNextSlide = field => {
@@ -485,7 +486,8 @@ export default class App extends Component {
     })
   }
 
-  handleResetForm = (prompt = true) => {
+  handleResetForm = (e,prompt = true) => {
+   
     const callback = () => {
       const {
         bloodTypes,
@@ -514,7 +516,8 @@ export default class App extends Component {
     }
 
     if (prompt) {
-      Alert.alert(
+        console.log("llegamo aqui?")
+      this.refs.customAlert.show(
         'Esta seguro?',
         'Los datos suministrados hasta el momento serán removidos',
         [
@@ -526,6 +529,7 @@ export default class App extends Component {
             onPress: () => {
               callback()
               this.props.navigation.navigate('Home')
+              this.refs.customAlert.dismiss();
             }
           }
         ],
@@ -553,13 +557,27 @@ export default class App extends Component {
   }
 
   handleBack = () => {
-    // console.log();
-    if (this.state.index == 0) {
-      this.handleResetForm(false)
+
+    // if (this.state.index == 0) {
+    //   this.handleResetForm(false)
+    // }
+    // const currentIndex = this.swiper.state.index
+    // const offset = this.currentIndex - 2 - currentIndex
+    // this.swiper.scrollBy(offset)
+    if(this.props.navigation.state.index==1){
+        this.handleResetForm();
+    } else{
+        if(this.state.infoPath){
+            const alternateFlow = ["Home","SpecialityInput", "DoctorList", "HourInput", "IdInput", "NameInput", "LastNameInput", "PhoneInput", "EmailInput", "Confirmation"];
+            // console.log(this.props.navigation.state.routes[this.props.navigation.state.index].key);
+            // console.log(alternateFlow[alternateFlow.indexOf(this.props.navigation.state.routes[this.props.navigation.state.index].key)])
+            this.props.navigation.navigate(alternateFlow[alternateFlow.indexOf(this.props.navigation.state.routes[this.props.navigation.state.index].key)-1]);
+
+        } else{
+            this.props.navigation.navigate(this.props.navigation.state.routes[this.props.navigation.state.index-1].key);
+        }
+         
     }
-    const currentIndex = this.swiper.state.index
-    const offset = this.currentIndex - 2 - currentIndex
-    this.swiper.scrollBy(offset)
   }
 
   onAction = active => {
@@ -724,7 +742,8 @@ export default class App extends Component {
             {/* }]}> */}
             {/* <Text style={styles.buttonText}>Volver al inicio</Text> */}
             {/* </TouchableOpacity> */}
-            {this.currentIndex !== 1 && (
+            
+              {this.props.navigation.state.index!=0?
               <View
                 style={{
                   alignSelf: 'center',
@@ -736,7 +755,7 @@ export default class App extends Component {
                   right: '30%'
                 }}
               >
-                {this.currentIndex !== 15 && (
+               
                   <TouchableOpacity
                     onPress={this.handleBack}
                     disabled={confirmationLoading}
@@ -747,7 +766,7 @@ export default class App extends Component {
                   >
                     <Text style={styles.buttonText}>Atrás</Text>
                   </TouchableOpacity>
-                )}
+                
                 <TouchableOpacity
                   disabled={confirmationLoading}
                   onPress={this.handleResetForm}
@@ -755,9 +774,10 @@ export default class App extends Component {
                 >
                   <Text style={styles.buttonText}>Volver al inicio</Text>
                 </TouchableOpacity>
-              </View>
-            )}
+              </View>:false}
+            
           </View>
+          <CustomAlert ref="customAlert"/>
         </View>
       </UserInactivity>
     )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, ImageBackground } from 'react-native';
-import { createSwitchNavigator } from '@react-navigation/core';
+import { createSwitchNavigator, createAppContainer } from '@react-navigation/core';
 import { createBrowserApp } from "@react-navigation/web";
 import Home from '../../screens/Home/';
 import IdInput from '../../screens/IdInput/';
@@ -11,7 +11,7 @@ import NameInput from '../../screens/NameInput';
 
 
 const MainNavigator = createSwitchNavigator({
-    App:App
+    App:{screen:App, path:''}
 })
 
 
