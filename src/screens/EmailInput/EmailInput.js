@@ -28,11 +28,11 @@ class EmailInput extends PureComponent {
             <View style={[styles.slide]}>
 
                 <View style={[styles.section, styles.box, {
-                    alignItems: 'flex-start',
+                    alignItems: 'center',
                     padding: 30,
                     justifyContent: 'flex-start'
                 }]}>
-
+                <View>
                     <Text style={styles.title}>
                         Introduzca su correo electrónico
                     </Text>
@@ -42,7 +42,7 @@ class EmailInput extends PureComponent {
                             ref={ref => {this.emailInput = ref}}
                             value={value}
                             onChangeText={(text) => handleTextChange(text)}
-                            style={[styles.input, {width: width/3}]}
+                            style={[styles.input, {width: width/2.5}]}
                             keyboardType='email-address'
                                 autoCorrect={false}
                             />
@@ -74,6 +74,7 @@ class EmailInput extends PureComponent {
                             style={[styles.button]}>
                             <Text style={styles.buttonText}>Continuar</Text>
                         </TouchableOpacity>
+                        </View>
                     </View>
 
 

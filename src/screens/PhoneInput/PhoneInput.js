@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
-import {View, Text, TextInput, TouchableOpacity, Keyboard, StyleSheet} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Keyboard, StyleSheet, Dimensions} from 'react-native';
 import BuscamedKeyboard from "../../components/BuscamedKeyboard";
-
+const {height, width} = Dimensions.get("window");
 class PhoneInput extends PureComponent {
 
     constructor(props) {
@@ -36,8 +36,8 @@ class PhoneInput extends PureComponent {
                     </Text>
 
                     <View style={[styles.inline, {marginTop: 10,marginBottom: 15}]}>
-                        <TextInput maxLength={3} editable={false} style={[styles.input, {marginRight: 15}]} value={val.substring(0, 3)}/>
-                        <TextInput maxLength={7} editable={false} style={[styles.input, {paddingRight: 180}]} value={val.substr(3)}/>
+                        <TextInput maxLength={3} editable={false} style={[styles.input, {marginRight: 15, width: width*0.15}]} value={val.substring(0, 3)}/>
+                        <TextInput maxLength={7} editable={false} style={[styles.input, { width: width*0.2}]} value={val.substr(3)}/>
                     </View>
 
                     <BuscamedKeyboard onKeyPressed={(value, removeChar) => this.handleKeyPress(value, removeChar)}/>

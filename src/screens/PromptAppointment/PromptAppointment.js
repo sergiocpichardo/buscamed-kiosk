@@ -34,7 +34,7 @@ class PromptAppointment extends PureComponent {
                 }
 
                 this.refs.customAlert.dismiss();
-                resetForm(false);
+                resetForm(false,false);
                 this.props.navigation.navigate('Home');
             }
         }]);

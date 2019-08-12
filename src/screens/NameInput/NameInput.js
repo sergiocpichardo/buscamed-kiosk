@@ -22,12 +22,12 @@ class NameInput extends PureComponent {
     render() {
         
         const {onNextSlide, handleTextChange, value} = this.props.screenProps['NameInput'];
-// console.log("Value",this.props);
+
         return (
                 <View style={[styles.slide]}>
 
-                    <View style={[styles.section, styles.box, {alignItems: 'flex-start', padding: 30,  justifyContent: 'flex-start'}]}>
-
+                    <View style={[styles.section, styles.box, {alignItems: 'center', padding: 30,  justifyContent: 'flex-start'}]}>
+                        <View>
                         <Text style={styles.title}>
                             Introduzca su primer nombre
                         </Text>
@@ -48,6 +48,7 @@ class NameInput extends PureComponent {
                                 style={[styles.button, {alignSelf: 'flex-end'}]}>
                                 <Text style={styles.buttonText}>Continuar</Text>
                             </TouchableOpacity>
+                            </View>
                     </View>
                 </View>
         )
@@ -66,7 +67,6 @@ const styles= StyleSheet.create({
     modalTitle: {
         fontSize: 26,
         fontWeight: 'bold',
-        // textAlign: 'center'
     },
 
     modalMessage: {
@@ -180,8 +180,6 @@ const styles= StyleSheet.create({
         justifyContent: 'center'
     },
 
-  
-
     inline: {
         flexDirection: 'row'
     },
@@ -203,18 +201,12 @@ const styles= StyleSheet.create({
         marginBottom: 5,
     },
     input: {
-     
-        // textAlign:'center',
-        // padding: 1,
-        // minWidth:width*0.1,
-        // maxWidth:width*0.2,
+
         width:'20%',
         fontSize: 40,
-        // paddingLeft: 4,
-        // paddingRight: 4,
         fontWeight: 'bold',
         color: '#6a6a6a',
-        backgroundColor: '#ececec'
+        backgroundColor: '#ececec',
     },
 });
 

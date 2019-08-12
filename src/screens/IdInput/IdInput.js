@@ -58,7 +58,7 @@ class IdInput extends PureComponent {
                     <View style={[styles.inline, {marginTop: 10,marginBottom: 15}]}>
                         <TextInput maxLength={3} editable={false} style={[styles.input, {marginRight: 15}]} value={val.substring(0, 3)}/>
                         <TextInput maxLength={7} editable={false} style={[styles.input, {marginRight: 15}]} value={val.substring(3, 10)}/>
-                        <TextInput maxLength={1} editable={false} style={[styles.input, {marginRight: 15}]} value={val.substring(10, 11)}/>
+                        <TextInput maxLength={1} editable={false} style={[styles.input]} value={val.substring(10, 11)}/>
                     </View>
 
                     <BuscamedKeyboard onKeyPressed={(value, removeChar) => this.handleKeyPress(value, removeChar)}/>

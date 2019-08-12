@@ -24,11 +24,11 @@ class LastNameInput extends PureComponent {
             <View style={[styles.slide]}>
 
                 <View style={[styles.section, styles.box, {
-                    alignItems: 'flex-start',
+                    alignItems: 'center',
                     padding: 30,
                     justifyContent: 'flex-start'
                 }]}>
-
+                <View>
                     <Text style={styles.title}>
                         Introduzca su apellido
                     </Text>
@@ -49,6 +49,7 @@ class LastNameInput extends PureComponent {
                         style={[styles.button, {alignSelf: 'flex-end'}]}>
                         <Text style={styles.buttonText}>Continuar</Text>
                     </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         )

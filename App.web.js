@@ -487,7 +487,7 @@ export default class App extends Component {
   }
 
   handleResetForm = (e,prompt = true) => {
-   
+  
     const callback = () => {
       const {
         bloodTypes,
@@ -565,7 +565,13 @@ export default class App extends Component {
     // const offset = this.currentIndex - 2 - currentIndex
     // this.swiper.scrollBy(offset)
     if(this.props.navigation.state.index==1){
-        this.handleResetForm();
+        if(this.state.infoPath){
+            const alternateFlow = ["Home","SpecialityInput", "DoctorList", "HourInput", "IdInput", "NameInput", "LastNameInput", "PhoneInput", "EmailInput", "Confirmation"];
+            this.props.navigation.navigate(alternateFlow[alternateFlow.indexOf(this.props.navigation.state.routes[this.props.navigation.state.index].key)-1]);
+        } else {
+            this.handleResetForm();
+        }
+     
     } else{
         if(this.state.infoPath){
             const alternateFlow = ["Home","SpecialityInput", "DoctorList", "HourInput", "IdInput", "NameInput", "LastNameInput", "PhoneInput", "EmailInput", "Confirmation"];

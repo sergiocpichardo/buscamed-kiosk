@@ -13,7 +13,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "dev": "webpack-dev-server",
     "build": "webpack",
-    "serve": "webpack --watch & webpack-dev-server --hot --inline --progress --colors",
+    "serve": "webpack --watch & webpack-dev-server --hot --inline --progress --colors --host 0.0.0.0 --port 4000",
     "test": "jest"
   },
   "dependencies": {
