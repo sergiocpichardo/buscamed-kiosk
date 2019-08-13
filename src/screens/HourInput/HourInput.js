@@ -20,7 +20,7 @@ function HourInput(props) {
             <TouchableOpacity
                 onPress={()=> {
                     handleSelectOption(item);
-                    console.log(infoPath);
+                    // console.log(infoPath);
                     if(infoPath){
                         props.navigation.navigate('IdInput');
                     }else {

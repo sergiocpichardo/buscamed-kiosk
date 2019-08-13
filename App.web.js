@@ -140,7 +140,7 @@ export default class App extends Component {
       .getDeviceInfo(id)
       .then(response => {
         const data = response.data
-        console.log(data, 'klk')
+       
         if (response.exists) {
           this.setState(
             {
@@ -160,7 +160,7 @@ export default class App extends Component {
               api.center
                 .getSpecialities(centerId, userType)
                 .then(response => {
-                //   console.log(response.data)
+                  
                   this.setState({ specialities: response.data })
                 })
                 .catch(error => {
@@ -193,7 +193,7 @@ export default class App extends Component {
           'http://buscamed.do/webservice/getperson?cedula=' + this.state.id
         )
         const cedulaInfo = await cedulaResult.json()
-        console.log(cedulaInfo);
+       
         let bloodType = cedulaInfo.COD_SANGRE
         const bloodData = [
           { id: '1', name: 'A+' },
@@ -239,7 +239,7 @@ export default class App extends Component {
             dob: cedulaInfo.FECHA_NAC
           },
           () => {
-            console.log(this.state)
+           
             api.patient.getPatientByIdNumber(this.state.id).then(response => {
               const patient = response.patient
 
@@ -255,7 +255,7 @@ export default class App extends Component {
                     patientInfoOrigin: 'buscamed'
                   },
                   prevState => {
-                    console.log('Viendo klk', prevState, this.state)
+                   
                     this.handleNextSlide('NameInput')
                   }
                 )
@@ -330,7 +330,7 @@ export default class App extends Component {
   }
 
   handleNextSlide = field => {
-    console.log(this.props)
+ 
     // const params = {
     //     handleReset: this.handleResetForm,
     //     loading: this.state.idCheckLoading,
@@ -516,7 +516,7 @@ export default class App extends Component {
     }
 
     if (prompt) {
-        console.log("llegamo aqui?")
+       
       this.refs.customAlert.show(
         'Esta seguro?',
         'Los datos suministrados hasta el momento serán removidos',
@@ -714,7 +714,7 @@ export default class App extends Component {
         </View>
       )
     }
-    console.log(this.props.navigation)
+ 
     return (
       <UserInactivity timeForInactivity={120000} onAction={this.onAction}>
         <View style={{ flex: 1 }}>

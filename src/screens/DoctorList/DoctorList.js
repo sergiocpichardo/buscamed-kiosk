@@ -4,6 +4,7 @@ import BuscamedKeyboard from "../../components/BuscamedKeyboard";
 import {styles} from "../../utils/theme";
 import CalendarModal from './CalendarModal';
 
+
 class DoctorList extends PureComponent {
 
     constructor(props) {
@@ -26,8 +27,8 @@ class DoctorList extends PureComponent {
                 onPress={()=> {this.setState({showCalendar:true},()=>this.calendar.open(item, center))}}
                 style={[styles.inline, {margin: 15, flex: 1}]}>
                 <Image
-                    source={{uri: "http://buscamed.do/admin/" + item.display_image}}
-                    resizeMode="cover"
+                    source={item.display_image===""||item.display_image==null?require("../../../assets/Artboard.png"):{uri: "http://buscamed.do/admin/" + item.display_image}}
+                    resizeMode='contain'
                     style={{width: 140, height: 110, marginRight: 15, borderRadius: 5}}/>
                 <View>
                     <Text style={[styles.title, {fontSize: 25}]}>{item.doctor_firstname} {item.doctor_lastname}</Text>
@@ -43,7 +44,6 @@ class DoctorList extends PureComponent {
 
     render() {
         const {onNextSlide, items, speciality, loading, loadSchedule} = this.props.screenProps['DoctorList'];
-
         return (
             <View style={styles.slide}>
                 <View style={[styles.section, styles.box, {

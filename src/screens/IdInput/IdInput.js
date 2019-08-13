@@ -41,7 +41,7 @@ class IdInput extends PureComponent {
 
 
     render() {
-        console.log("idinput props", this.props);
+        // console.log("idinput props", this.props);
         const {onNextSlide, value, checkId, loading} = this.props.screenProps['IdInput'];
         // const val = this.props.navigation.getParam('value',"");
          

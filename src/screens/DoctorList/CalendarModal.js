@@ -109,7 +109,7 @@ export default class CalendarModal extends PureComponent {
         this.setState({
             modalVisible: false,
             markedDates: [],
-        }, () => {console.log(this.props);
+        }, () => {
             loadSchedule(doctor, date);
             this.props.navigation.navigate("HourInput");
             

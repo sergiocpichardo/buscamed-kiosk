@@ -44,7 +44,7 @@ class PromptAppointment extends PureComponent {
 
     render() {
         const {onNextSlide, form, createAppointment, loading, resetForm} = this.props.screenProps['PromptAppointment'];
-        console.log(form);
+ 
         return (
             <View style={[styles.slide]}>
 

@@ -50,9 +50,8 @@ class SpecialityInput extends PureComponent {
 
 
     render() {
-        console.log(this.props.screenProps['SpecialityInput']);
+        // console.log(this.props.screenProps['SpecialityInput']);
         const {onNextSlide, items} = this.props.screenProps['SpecialityInput'];
-
 
         return (
             <View style={[styles.slide]}>
