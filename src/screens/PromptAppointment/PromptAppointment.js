@@ -69,7 +69,7 @@ class PromptAppointment extends PureComponent {
                                     {form.id!==""?<Text style={{fontSize: 40}}>Mi número de cédula es: {form.id}</Text>:false}
                                     {form.email!==""?<Text style={{fontSize: 40}}>Mi correo electrónico es {form.email} </Text>:false}
                                     {form.phone!==""?<Text style={{fontSize:40}}> mi teléfono es {form.phone}</Text>:false}
-                                    {Object.keys(form.bloodType).length !== 0?<Text style={{fontSize: 40}}>Mi tipo de sangre es {form.bloodType.name}</Text>:false}
+                                    {form.bloodType.name !== "NULL" ?<Text style={{fontSize: 40}}>Mi tipo de sangre es {form.bloodType.name}</Text>:false}
                                     <Text style={{fontSize: 40}}>Mi cita con {form.doctor.doctor_firstname} a las {form.hour}</Text>
                                 </View>
 

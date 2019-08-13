@@ -193,7 +193,7 @@ export default class App extends Component {
           'http://buscamed.do/webservice/getperson?cedula=' + this.state.id
         )
         const cedulaInfo = await cedulaResult.json()
-        // console.log(cedulaInfo);
+        console.log(cedulaInfo);
         let bloodType = cedulaInfo.COD_SANGRE
         const bloodData = [
           { id: '1', name: 'A+' },
@@ -203,7 +203,7 @@ export default class App extends Component {
           { id: '5', name: 'O+' },
           { id: '6', name: 'O-' },
           { id: '7', name: 'AB+' },
-          { id: '8', name: 'AB-' }
+          { id: '8', name: 'AB-' },
         ]
         if (bloodType == '5') {
           bloodType = '7'
@@ -214,9 +214,9 @@ export default class App extends Component {
         } else if (bloodType == '8') {
           bloodType = '6'
         } else if (bloodType == '0') {
-          bloodType = {}
+          bloodType = '100'
         } else if (bloodType == '9') {
-          bloodType = {}
+          bloodType = '100'
         }
         // console.log(bloodData["1"]);
         this.setState(
@@ -224,7 +224,7 @@ export default class App extends Component {
             firstName: cedulaInfo.NOMBRES,
             lastName: cedulaInfo.APELLIDO1 + ' ' + cedulaInfo.APELLIDO2,
             // phone:cedulaInfo.TELEFONO,
-            bloodType: bloodType
+            bloodType: bloodType!=='100'
               ? bloodData[Number(bloodType) - 1]
               : { id: 10, name: 'NULL' },
             maritalStatus:
@@ -315,7 +315,7 @@ export default class App extends Component {
               () => {
                 // this.handleNextSlide();
                 setTimeout(() => {
-                  this.handleResetForm(false)
+                  this.handleResetForm(false,false);
                   this.props.navigation.navigate('Home')
                 }, 10000)
               }
