@@ -18,7 +18,7 @@ function Home(props) {
                     style={[styles.button, { padding: 25}]}>
                     <Text style={[styles.buttonText, {fontSize: 28}]}>Informacion</Text>
                 </TouchableOpacity>
-                <Image style={{width: '40%', height: '40%'}} resizeMode="contain" source={{uri: 'http://buscamed.do/admin/' +data.display_image}}/>
+                <Image style={{width: '40%', height: '40%'}} resizeMode="contain" source={{uri: 'https://buscamed.do/admin/' +data.display_image}}/>
                 <TouchableOpacity
                     onPress={()=>props.navigation.navigate("IdInput")}
                     style={[styles.button, {marginTop: 100, padding: 25}]}>

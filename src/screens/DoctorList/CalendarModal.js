@@ -209,7 +209,7 @@ export default class CalendarModal extends PureComponent {
                                 borderTopRightRadius: 5
                             }]}>
                                 <Image
-                                    source={{uri: "http://buscamed.do/admin/" + doctor.display_image}}
+                                    source={{uri: "https://buscamed.do/admin/" + doctor.display_image}}
                                     resizeMode="cover"
                                     style={{width: 80, height: 50, marginRight: 15, borderRadius: 5}}/>
                                 <View>

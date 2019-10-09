@@ -1,8 +1,8 @@
 // export const url = "https://froyoh.com/beforward-api/public/api";
 // export const url = "https://beforward.do/api/v1";
 // export const url = "http://laravel/beforward/beforward-api/public/api";
-export const url = "http://buscamed.do/Webservice";
-export const baseUrl = "http://buscamed.do";
+export const url = "https://buscamed.do/Webservice";
+export const baseUrl = "https://buscamed.do";
 
 export const headers = {
     'Accept': 'application/json',

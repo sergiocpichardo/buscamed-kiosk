@@ -156,7 +156,7 @@ class PhotoTake extends Component {
     render() {
 
         const {setPicture,patient} = this.props;
-        // const patientPicture = "http://buscamed.do/admin" . patient.display_image;
+        // const patientPicture = "https://buscamed.do/admin" . patient.display_image;
 
         const {isCameraVisible, isTakingPicture, count, isTaking, pictureTaken, image} = this.state;
         return (

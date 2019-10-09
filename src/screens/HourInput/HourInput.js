@@ -50,7 +50,7 @@ function HourInput(props) {
                 <View style={[styles.inline, {width: '100%', justifyContent: 'space-between'}]}>
                     <View
                         style={[styles.inline, {marginLeft: '9%', justifyContent: 'center', alignItems: 'center', alignSelf: 'flex-start'}]}>
-                        <Image source={{uri: "http://buscamed.do/admin/" + doctor.display_image}}
+                        <Image source={{uri: "https://buscamed.do/admin/" + doctor.display_image}}
                                resizeMode="cover" style={{width: 70, height: 70, marginRight: 15}}/>
                         <View>
                             <Text style={[styles.title, {fontSize: 25}]}>{doctor.doctor_firstname} {doctor.doctor_lastname}</Text>

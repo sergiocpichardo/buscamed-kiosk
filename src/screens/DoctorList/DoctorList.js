@@ -27,7 +27,7 @@ class DoctorList extends PureComponent {
                 onPress={()=> {this.setState({showCalendar:true},()=>this.calendar.open(item, center))}}
                 style={[styles.inline, {margin: 15, flex: 1}]}>
                 <Image
-                    source={item.display_image===""||item.display_image==null?require("../../../assets/Artboard.png"):{uri: "http://buscamed.do/admin/" + item.display_image}}
+                    source={item.display_image===""||item.display_image==null?require("../../../assets/Artboard.png"):{uri: "https://buscamed.do/admin/" + item.display_image}}
                     resizeMode='contain'
                     style={{width: 140, height: 110, marginRight: 15, borderRadius: 5}}/>
                 <View>

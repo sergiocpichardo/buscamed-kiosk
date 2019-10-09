@@ -190,7 +190,7 @@ export default class App extends Component {
       },
       async () => {
         const cedulaResult = await fetch(
-          'http://buscamed.do/webservice/getperson?cedula=' + this.state.id
+          'https://buscamed.do/webservice/getperson?cedula=' + this.state.id
         )
         const cedulaInfo = await cedulaResult.json()
        

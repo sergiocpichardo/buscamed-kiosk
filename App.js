@@ -170,7 +170,7 @@ export default class App extends Component {
         this.setState({
             idCheckLoading: true
         }, async () => {
-            const cedulaResult = await fetch("http://buscamed.do/webservice/getperson?cedula=" + this.state.id);
+            const cedulaResult = await fetch("https://buscamed.do/webservice/getperson?cedula=" + this.state.id);
             const cedulaInfo = await cedulaResult.json();
             // console.log(cedulaInfo);
             let bloodType = cedulaInfo.COD_SANGRE;
