@@ -193,7 +193,11 @@ export default class App extends Component {
           'https://buscamed.do/webservice/getperson?cedula=' + this.state.id
         )
         const cedulaInfo = await cedulaResult.json()
-       
+        console.log("CedulaInfo",cedulaInfo);
+        if(cedulaInfo.error){
+          this.noCedula();
+          return null;
+        }
         let bloodType = cedulaInfo.COD_SANGRE
         const bloodData = [
           { id: '1', name: 'A+' },
